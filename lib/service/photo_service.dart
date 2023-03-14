@@ -9,16 +9,16 @@ import '../utils/log_service.dart';
 
 class PhotoService{
 
-  static Future<Either<String,List<PhotoModel>>> getPhotos() async{
+  static Future<Either<String,List<PhotoModel>>> getPhotos(int page) async{
+    Log.i(page.toString());
     try{
       Response response = await Dio().get(
-          Endpoints.getPhotos,
+          '${Endpoints.getPhotos}?page=$page&per_page=50&order_by=ASC',
           options: Options(headers: {
             'x-api-key': Endpoints.apiKey,
             'Authorization': 'Bearer ${Endpoints.token}'
           })
       );
-      Log.w(response.statusCode.toString());
       if(response.statusCode == 200 || response.statusCode == 201){
         List<PhotoModel> photos = [];
         for (var e in (response.data as List)) {

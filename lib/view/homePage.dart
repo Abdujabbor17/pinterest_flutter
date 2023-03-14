@@ -19,44 +19,67 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   List<PhotoModel> photoList = [];
+
+  final ScrollController _scrollController = ScrollController();
+
+  int _currentPage  = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMoreData();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels  ==
+          _scrollController.position.maxScrollExtent) {
+        _loadMoreData();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: PhotoService.getPhotos(),
-        builder: (ctx,snapshot){
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            EasyLoading.show();
-            return const SizedBox();
-          }else if (snapshot.hasData) {
-            snapshot.data?.fold((l) {
-              EasyLoading.showError(l);
-            }, (r) {
-              EasyLoading.dismiss();
-              photoList = r;
-            });
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: MasonryGridView.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: 4,
-                crossAxisSpacing: 4,
-                itemCount: photoList.length,
-                itemBuilder: (context, index) {
-                  return HomeItem(
-                    context,
-                    photoList[index],
-                    // index: index,
-                    // extent: (index % 5 + 1) * 100,
-                  );
-                },
-              ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: MasonryGridView.count(
+
+          controller: _scrollController,
+          crossAxisCount: 2,
+          mainAxisSpacing: 4,
+          crossAxisSpacing: 4,
+          itemCount: photoList.length,
+          itemBuilder: (context, index) {
+            return HomeItem(
+              context,
+              photoList[index],
+              // index: index,
+              // extent: (index % 5 + 1) * 100,
             );
-          }
-          else  {
-            return Text("Error: ${snapshot.error}");
-          }
-        })
+          },
+        ),
+      )
     );
   }
+
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadMoreData() async {
+   var res = await PhotoService.getPhotos(_currentPage);
+   res.fold((l) {
+     EasyLoading.showError(l);
+   }, (r) {
+     setState(() {
+       photoList.addAll(r);
+       _currentPage++;
+     });
+     return photoList;
+   });
+  }
 }
+
+

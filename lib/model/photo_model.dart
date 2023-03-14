@@ -10,100 +10,100 @@ String photoModelToJson(List<PhotoModel> data) => json.encode(List<dynamic>.from
 
 class PhotoModel {
   PhotoModel({
-    required this.id,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.promotedAt,
-    required this.width,
-    required this.height,
-    required this.color,
-    required this.blurHash,
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.promotedAt,
+    this.width,
+    this.height,
+    this.color,
+    this.blurHash,
     this.description,
     this.altDescription,
-    required this.urls,
-    required this.links,
-    required this.likes,
-    required this.likedByUser,
-    required this.currentUserCollections,
+    this.urls,
+    this.links,
+    this.likes,
+    this.likedByUser,
+    this.currentUserCollections,
     this.sponsorship,
-    required this.topicSubmissions,
-    required this.user,
+    this.topicSubmissions,
+    this.user,
   });
 
-  String id;
-  DateTime createdAt;
-  DateTime updatedAt;
-  DateTime promotedAt;
-  int width;
-  int height;
-  String color;
-  String blurHash;
+  String? id;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  DateTime? promotedAt;
+  int? width;
+  int? height;
+  String? color;
+  String? blurHash;
   String? description;
   String? altDescription;
-  Urls urls;
-  PhotoModelLinks links;
-  int likes;
-  bool likedByUser;
-  List<dynamic> currentUserCollections;
+  Urls? urls;
+  PhotoModelLinks? links;
+  int? likes;
+  bool? likedByUser;
+  List<dynamic>? currentUserCollections;
   dynamic sponsorship;
-  TopicSubmissions topicSubmissions;
-  User user;
+  TopicSubmissions? topicSubmissions;
+  User? user;
 
   factory PhotoModel.fromJson(Map<String, dynamic> json) => PhotoModel(
     id: json["id"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    promotedAt: DateTime.parse(json["promoted_at"]),
+    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+    promotedAt: json["promoted_at"] == null ? null : DateTime.parse(json["promoted_at"]),
     width: json["width"],
     height: json["height"],
     color: json["color"],
     blurHash: json["blur_hash"],
     description: json["description"],
     altDescription: json["alt_description"],
-    urls: Urls.fromJson(json["urls"]),
-    links: PhotoModelLinks.fromJson(json["links"]),
+    urls: json["urls"] == null ? null : Urls.fromJson(json["urls"]),
+    links: json["links"] == null ? null : PhotoModelLinks.fromJson(json["links"]),
     likes: json["likes"],
     likedByUser: json["liked_by_user"],
-    currentUserCollections: List<dynamic>.from(json["current_user_collections"].map((x) => x)),
+    currentUserCollections: json["current_user_collections"] == null ? [] : List<dynamic>.from(json["current_user_collections"]!.map((x) => x)),
     sponsorship: json["sponsorship"],
-    topicSubmissions: TopicSubmissions.fromJson(json["topic_submissions"]),
-    user: User.fromJson(json["user"]),
+    topicSubmissions: json["topic_submissions"] == null ? null : TopicSubmissions.fromJson(json["topic_submissions"]),
+    user: json["user"] == null ? null : User.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-    "promoted_at": promotedAt.toIso8601String(),
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+    "promoted_at": promotedAt?.toIso8601String(),
     "width": width,
     "height": height,
     "color": color,
     "blur_hash": blurHash,
     "description": description,
     "alt_description": altDescription,
-    "urls": urls.toJson(),
-    "links": links.toJson(),
+    "urls": urls?.toJson(),
+    "links": links?.toJson(),
     "likes": likes,
     "liked_by_user": likedByUser,
-    "current_user_collections": List<dynamic>.from(currentUserCollections.map((x) => x)),
+    "current_user_collections": currentUserCollections == null ? [] : List<dynamic>.from(currentUserCollections!.map((x) => x)),
     "sponsorship": sponsorship,
-    "topic_submissions": topicSubmissions.toJson(),
-    "user": user.toJson(),
+    "topic_submissions": topicSubmissions?.toJson(),
+    "user": user?.toJson(),
   };
 }
 
 class PhotoModelLinks {
   PhotoModelLinks({
-    required this.self,
-    required this.html,
-    required this.download,
-    required this.downloadLocation,
+    this.self,
+    this.html,
+    this.download,
+    this.downloadLocation,
   });
 
-  String self;
-  String html;
-  String download;
-  String downloadLocation;
+  String? self;
+  String? html;
+  String? download;
+  String? downloadLocation;
 
   factory PhotoModelLinks.fromJson(Map<String, dynamic> json) => PhotoModelLinks(
     self: json["self"],
@@ -122,96 +122,112 @@ class PhotoModelLinks {
 
 class TopicSubmissions {
   TopicSubmissions({
-    this.the3DRenders,
-    this.currentEvents,
+    this.architectureInterior,
+    this.streetPhotography,
+    this.travel,
+    this.spirituality,
+    this.experimental,
     this.nature,
     this.wallpapers,
-    this.travel,
-    this.architectureInterior,
-    this.people,
+    this.texturesPatterns,
+    this.animals,
   });
 
-  The3DRenders? the3DRenders;
-  The3DRenders? currentEvents;
-  Nature? nature;
-  The3DRenders? wallpapers;
-  The3DRenders? travel;
-  The3DRenders? architectureInterior;
-  Nature? people;
+  Animals? architectureInterior;
+  Animals? streetPhotography;
+  Experimental? travel;
+  Animals? spirituality;
+  Experimental? experimental;
+  Experimental? nature;
+  Experimental? wallpapers;
+  Animals? texturesPatterns;
+  Animals? animals;
 
   factory TopicSubmissions.fromJson(Map<String, dynamic> json) => TopicSubmissions(
-    the3DRenders: json["3d-renders"] == null ? null : The3DRenders.fromJson(json["3d-renders"]),
-    currentEvents: json["current-events"] == null ? null : The3DRenders.fromJson(json["current-events"]),
-    nature: json["nature"] == null ? null : Nature.fromJson(json["nature"]),
-    wallpapers: json["wallpapers"] == null ? null : The3DRenders.fromJson(json["wallpapers"]),
-    travel: json["travel"] == null ? null : The3DRenders.fromJson(json["travel"]),
-    architectureInterior: json["architecture-interior"] == null ? null : The3DRenders.fromJson(json["architecture-interior"]),
-    people: json["people"] == null ? null : Nature.fromJson(json["people"]),
+    architectureInterior: json["architecture-interior"] == null ? null : Animals.fromJson(json["architecture-interior"]),
+    streetPhotography: json["street-photography"] == null ? null : Animals.fromJson(json["street-photography"]),
+    travel: json["travel"] == null ? null : Experimental.fromJson(json["travel"]),
+    spirituality: json["spirituality"] == null ? null : Animals.fromJson(json["spirituality"]),
+    experimental: json["experimental"] == null ? null : Experimental.fromJson(json["experimental"]),
+    nature: json["nature"] == null ? null : Experimental.fromJson(json["nature"]),
+    wallpapers: json["wallpapers"] == null ? null : Experimental.fromJson(json["wallpapers"]),
+    texturesPatterns: json["textures-patterns"] == null ? null : Animals.fromJson(json["textures-patterns"]),
+    animals: json["animals"] == null ? null : Animals.fromJson(json["animals"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "3d-renders": the3DRenders?.toJson(),
-    "current-events": currentEvents?.toJson(),
+    "architecture-interior": architectureInterior?.toJson(),
+    "street-photography": streetPhotography?.toJson(),
+    "travel": travel?.toJson(),
+    "spirituality": spirituality?.toJson(),
+    "experimental": experimental?.toJson(),
     "nature": nature?.toJson(),
     "wallpapers": wallpapers?.toJson(),
-    "travel": travel?.toJson(),
-    "architecture-interior": architectureInterior?.toJson(),
-    "people": people?.toJson(),
+    "textures-patterns": texturesPatterns?.toJson(),
+    "animals": animals?.toJson(),
   };
 }
 
-class The3DRenders {
-  The3DRenders({
-    required this.status,
+class Animals {
+  Animals({
+    this.status,
+    this.approvedOn,
   });
 
-  String status;
+  Status? status;
+  DateTime? approvedOn;
 
-  factory The3DRenders.fromJson(Map<String, dynamic> json) => The3DRenders(
-    status: json["status"],
+  factory Animals.fromJson(Map<String, dynamic> json) => Animals(
+    status: statusValues.map[json["status"]]!,
+    approvedOn: json["approved_on"] == null ? null : DateTime.parse(json["approved_on"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
+    "status": statusValues.reverse[status],
+    "approved_on": approvedOn?.toIso8601String(),
   };
 }
 
-class Nature {
-  Nature({
-    required this.status,
-    required this.approvedOn,
+enum Status { APPROVED, REJECTED, UNEVALUATED }
+
+final statusValues = EnumValues({
+  "approved": Status.APPROVED,
+  "rejected": Status.REJECTED,
+  "unevaluated": Status.UNEVALUATED
+});
+
+class Experimental {
+  Experimental({
+    this.status,
   });
 
-  String status;
-  DateTime approvedOn;
+  Status? status;
 
-  factory Nature.fromJson(Map<String, dynamic> json) => Nature(
-    status: json["status"],
-    approvedOn: DateTime.parse(json["approved_on"]),
+  factory Experimental.fromJson(Map<String, dynamic> json) => Experimental(
+    status: statusValues.map[json["status"]]!,
   );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "approved_on": approvedOn.toIso8601String(),
+    "status": statusValues.reverse[status],
   };
 }
 
 class Urls {
   Urls({
-    required this.raw,
-    required this.full,
-    required this.regular,
-    required this.small,
-    required this.thumb,
-    required this.smallS3,
+    this.raw,
+    this.full,
+    this.regular,
+    this.small,
+    this.thumb,
+    this.smallS3,
   });
 
-  String raw;
-  String full;
-  String regular;
-  String small;
-  String thumb;
-  String smallS3;
+  String? raw;
+  String? full;
+  String? regular;
+  String? small;
+  String? thumb;
+  String? smallS3;
 
   factory Urls.fromJson(Map<String, dynamic> json) => Urls(
     raw: json["raw"],
@@ -234,50 +250,50 @@ class Urls {
 
 class User {
   User({
-    required this.id,
-    required this.updatedAt,
-    required this.username,
-    required this.name,
-    required this.firstName,
+    this.id,
+    this.updatedAt,
+    this.username,
+    this.name,
+    this.firstName,
     this.lastName,
     this.twitterUsername,
     this.portfolioUrl,
     this.bio,
     this.location,
-    required this.links,
-    required this.profileImage,
+    this.links,
+    this.profileImage,
     this.instagramUsername,
-    required this.totalCollections,
-    required this.totalLikes,
-    required this.totalPhotos,
-    required this.acceptedTos,
-    required this.forHire,
-    required this.social,
+    this.totalCollections,
+    this.totalLikes,
+    this.totalPhotos,
+    this.acceptedTos,
+    this.forHire,
+    this.social,
   });
 
-  String id;
-  DateTime updatedAt;
-  String username;
-  String name;
-  String firstName;
+  String? id;
+  DateTime? updatedAt;
+  String? username;
+  String? name;
+  String? firstName;
   String? lastName;
   String? twitterUsername;
   String? portfolioUrl;
   String? bio;
   String? location;
-  UserLinks links;
-  ProfileImage profileImage;
+  UserLinks? links;
+  ProfileImage? profileImage;
   String? instagramUsername;
-  int totalCollections;
-  int totalLikes;
-  int totalPhotos;
-  bool acceptedTos;
-  bool forHire;
-  Social social;
+  int? totalCollections;
+  int? totalLikes;
+  int? totalPhotos;
+  bool? acceptedTos;
+  bool? forHire;
+  Social? social;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
     id: json["id"],
-    updatedAt: DateTime.parse(json["updated_at"]),
+    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
     username: json["username"],
     name: json["name"],
     firstName: json["first_name"],
@@ -286,20 +302,20 @@ class User {
     portfolioUrl: json["portfolio_url"],
     bio: json["bio"],
     location: json["location"],
-    links: UserLinks.fromJson(json["links"]),
-    profileImage: ProfileImage.fromJson(json["profile_image"]),
+    links: json["links"] == null ? null : UserLinks.fromJson(json["links"]),
+    profileImage: json["profile_image"] == null ? null : ProfileImage.fromJson(json["profile_image"]),
     instagramUsername: json["instagram_username"],
     totalCollections: json["total_collections"],
     totalLikes: json["total_likes"],
     totalPhotos: json["total_photos"],
     acceptedTos: json["accepted_tos"],
     forHire: json["for_hire"],
-    social: Social.fromJson(json["social"]),
+    social: json["social"] == null ? null : Social.fromJson(json["social"]),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "updated_at": updatedAt.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
     "username": username,
     "name": name,
     "first_name": firstName,
@@ -308,36 +324,36 @@ class User {
     "portfolio_url": portfolioUrl,
     "bio": bio,
     "location": location,
-    "links": links.toJson(),
-    "profile_image": profileImage.toJson(),
+    "links": links?.toJson(),
+    "profile_image": profileImage?.toJson(),
     "instagram_username": instagramUsername,
     "total_collections": totalCollections,
     "total_likes": totalLikes,
     "total_photos": totalPhotos,
     "accepted_tos": acceptedTos,
     "for_hire": forHire,
-    "social": social.toJson(),
+    "social": social?.toJson(),
   };
 }
 
 class UserLinks {
   UserLinks({
-    required this.self,
-    required this.html,
-    required this.photos,
-    required this.likes,
-    required this.portfolio,
-    required this.following,
-    required this.followers,
+    this.self,
+    this.html,
+    this.photos,
+    this.likes,
+    this.portfolio,
+    this.following,
+    this.followers,
   });
 
-  String self;
-  String html;
-  String photos;
-  String likes;
-  String portfolio;
-  String following;
-  String followers;
+  String? self;
+  String? html;
+  String? photos;
+  String? likes;
+  String? portfolio;
+  String? following;
+  String? followers;
 
   factory UserLinks.fromJson(Map<String, dynamic> json) => UserLinks(
     self: json["self"],
@@ -362,14 +378,14 @@ class UserLinks {
 
 class ProfileImage {
   ProfileImage({
-    required this.small,
-    required this.medium,
-    required this.large,
+    this.small,
+    this.medium,
+    this.large,
   });
 
-  String small;
-  String medium;
-  String large;
+  String? small;
+  String? medium;
+  String? large;
 
   factory ProfileImage.fromJson(Map<String, dynamic> json) => ProfileImage(
     small: json["small"],
@@ -410,4 +426,16 @@ class Social {
     "twitter_username": twitterUsername,
     "paypal_email": paypalEmail,
   };
+}
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }
